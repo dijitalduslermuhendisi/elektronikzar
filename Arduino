@@ -1,0 +1,59 @@
+int segmentPinleri[7] = {2, 3, 4, 5, 6, 7, 8}; 
+int rakamlar[10][7] = {
+  {0, 0, 0, 0, 0, 0, 1}, 
+  {1, 0, 0, 1, 1, 1, 1}, 
+  {0, 0, 1, 0, 0, 1, 0}, 
+  {0, 0, 0, 0, 1, 1, 0}, 
+  {1, 0, 0, 1, 1, 0, 0}, 
+  {0, 1, 0, 0, 1, 0, 0}, 
+  {0, 1, 0, 0, 0, 0, 0}, 
+  {0, 0, 0, 1, 1, 1, 1}, 
+  {0, 0, 0, 0, 0, 0, 0}, 
+  {0, 0, 0, 0, 1, 0, 0}  
+};
+
+int butonPin = 9;
+int buzzer = 10;
+
+void setup() {
+  for (int i = 0; i < 7; i++) {
+    pinMode(segmentPinleri[i], OUTPUT);
+  }
+
+  pinMode(butonPin, INPUT_PULLUP); 
+  pinMode(buzzer, OUTPUT);
+
+  ekranTemizle();
+}
+
+void loop() {
+  if (digitalRead(butonPin) == LOW) {
+    zarAt();
+  }
+}
+
+void zarAt() {
+  tone(buzzer, 1000, 200); 
+  
+  for (int i = 0; i < 10; i++) { 
+    int tempSayi = random(1, 7); 
+    rakamGoster(tempSayi);
+    delay(100); 
+  }
+  
+  int sonuc = random(1, 7); 
+  rakamGoster(sonuc);
+  delay(1000);
+}
+
+void rakamGoster(int sayi) {
+  for (int i = 0; i < 7; i++) {
+    digitalWrite(segmentPinleri[i], rakamlar[sayi][i]);
+  }
+}
+
+void ekranTemizle() {
+  for (int i = 0; i < 7; i++) {
+    digitalWrite(segmentPinleri[i], HIGH); 
+  }
+}
